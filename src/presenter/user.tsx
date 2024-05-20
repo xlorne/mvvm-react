@@ -1,8 +1,9 @@
 import {User} from "../model/user";
 import React from "react";
 import {ActionType, ProForm} from "@ant-design/pro-components";
+import {UserPresenter} from "../page/user/user.presenter";
 
-const userPresenter = () => {
+const userPresenter = ():UserPresenter => {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [userList, setUserList] = React.useState<User[]>([]);
@@ -34,13 +35,9 @@ const userPresenter = () => {
         setModalVisible(true);
     }
 
-    const getUser = (id: number) => {
-        return userList.find(user => user.id === id);
-    }
-
     const handleUser = (user: any) => {
         const currentUser = User.fromJson(user);
-        const localUser = getUser(currentUser.id);
+        const localUser = userList.find(item => user.id === item.id);
         if (localUser) {
             localUser.update(currentUser);
         }else{

@@ -1,32 +1,23 @@
 import React from "react";
 import {ModalForm, ProFormDigit, ProFormText, ProTable} from "@ant-design/pro-components";
 import {Button, Popconfirm, Space} from "antd";
-import userPresenter from "../../presenter/user";
 import {User} from "../../model/user";
+import {UserPresenter} from "./user.presenter";
 
+export interface UserComponentProps {
+    userPresenter(): UserPresenter;
+}
 
-const UserComponent: React.FC = (props) => {
+export const UserComponent: React.FC<UserComponentProps> = (props) => {
 
-    const {
-        form,
-        modalVisible,
-        modalTitle,
-        actionRef,
-
-        handleUser,
-        removeUser,
-        fetchUsers,
-        showAddModal,
-        hideModal,
-        showEditModal,
-    } = userPresenter();
+    const presenter = props.userPresenter();
 
     const columns = [
         {
             title: '编号',
             dataIndex: 'id',
             key: 'id',
-            valueType: 'indexBorder',
+            valueType: 'text',
             search: false,
         },
         {
@@ -55,14 +46,14 @@ const UserComponent: React.FC = (props) => {
             render: (_: any, record: User) => (
                 <Space>
                     <a key="edit" onClick={() => {
-                        showEditModal(record);
+                        presenter.showEditModal(record);
                     }}>编辑</a>
 
                     <Popconfirm
                         title="确认要删除吗？"
                         key="delete"
                         onConfirm={() => {
-                            removeUser(record.id);
+                            presenter.removeUser(record.id);
                         }}
                     >
                         <a key="delete">删除</a>
@@ -78,26 +69,26 @@ const UserComponent: React.FC = (props) => {
             <ProTable
                 toolBarRender={
                     () => [
-                        <Button key="button" onClick={() => showAddModal()} type="primary">添加用户</Button>
+                        <Button key="button" onClick={() => presenter.showAddModal()} type="primary">添加用户</Button>
                     ]
                 }
-                request={fetchUsers}
-                actionRef={actionRef}
+                request={presenter.fetchUsers}
+                actionRef={presenter.actionRef}
                 columns={columns}
                 rowKey="id"
                 headerTitle="用户列表"
             />
 
             <ModalForm
-                form={form}
-                title={modalTitle}
-                open={modalVisible}
+                form={presenter.form}
+                title={presenter.modalTitle}
+                open={presenter.modalVisible}
                 modalProps={{
                     destroyOnClose: true,
-                    onCancel: () => hideModal(),
+                    onCancel: () => presenter.hideModal(),
                 }}
                 onFinish={async (values) => {
-                    return handleUser(values);
+                    return presenter.handleUser(values);
                 }}
             >
                 <ProFormText
@@ -144,5 +135,3 @@ const UserComponent: React.FC = (props) => {
         </>
     );
 }
-
-export default UserComponent;
