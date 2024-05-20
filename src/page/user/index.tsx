@@ -1,32 +1,44 @@
 import React from "react";
-import {ModalForm, ProForm, ProFormDigit, ProFormText, ProTable} from "@ant-design/pro-components";
+import {ModalForm, ProFormDigit, ProFormText, ProTable} from "@ant-design/pro-components";
 import {Button, Popconfirm, Space} from "antd";
 import userPresenter from "../../presenter/user";
 import {User} from "../../model/user";
 
+
 const UserComponent: React.FC = (props) => {
 
-    const {userList, addUser, removeUser} = userPresenter();
+    const {
+        form,
+        modalVisible,
+        modalTitle,
+        actionRef,
 
-    const [form] = ProForm.useForm();
-
-    const [modalVisible, setModalVisible] = React.useState(false);
+        handleUser,
+        removeUser,
+        fetchUsers,
+        showAddModal,
+        hideModal,
+        showEditModal,
+    } = userPresenter();
 
     const columns = [
         {
             title: '编号',
             dataIndex: 'id',
             key: 'id',
+            valueType: 'indexBorder',
             search: false,
         },
         {
             title: '姓名',
             dataIndex: 'name',
+            valueType: 'text',
             key: 'name',
         },
         {
             title: '年龄',
             dataIndex: 'age',
+            valueType: 'digit',
             key: 'age',
             search: false,
         },
@@ -34,27 +46,26 @@ const UserComponent: React.FC = (props) => {
             title: '地址',
             dataIndex: 'address',
             key: 'address',
+            valueType: 'text',
             search: false,
         },
         {
             title: '操作',
             valueType: 'option',
             render: (_: any, record: User) => (
-                <Space size="middle">
-                    <a key={"edit"} onClick={()=>{
-                        for (let key in record){
-                            // @ts-ignore
-                            form.setFieldsValue({[key]:record[key]});
-                        }
-                        setModalVisible(true);
+                <Space>
+                    <a key="edit" onClick={() => {
+                        showEditModal(record);
                     }}>编辑</a>
+
                     <Popconfirm
                         title="确认要删除吗？"
+                        key="delete"
                         onConfirm={() => {
                             removeUser(record.id);
                         }}
                     >
-                        <a key={"delete"}>删除</a>
+                        <a key="delete">删除</a>
                     </Popconfirm>
 
                 </Space>
@@ -67,10 +78,11 @@ const UserComponent: React.FC = (props) => {
             <ProTable
                 toolBarRender={
                     () => [
-                        <Button key="button" onClick={() => setModalVisible(true)} type="primary">添加用户</Button>
+                        <Button key="button" onClick={() => showAddModal()} type="primary">添加用户</Button>
                     ]
                 }
-                dataSource={userList}
+                request={fetchUsers}
+                actionRef={actionRef}
                 columns={columns}
                 rowKey="id"
                 headerTitle="用户列表"
@@ -78,16 +90,14 @@ const UserComponent: React.FC = (props) => {
 
             <ModalForm
                 form={form}
-                title="添加用户"
+                title={modalTitle}
                 open={modalVisible}
                 modalProps={{
                     destroyOnClose: true,
-                    onCancel: () => setModalVisible(false),
+                    onCancel: () => hideModal(),
                 }}
                 onFinish={async (values) => {
-                    addUser(values);
-                    setModalVisible(false);
-                    return true;
+                    return handleUser(values);
                 }}
             >
                 <ProFormText
@@ -114,7 +124,6 @@ const UserComponent: React.FC = (props) => {
                         },
                     ]}
                     fieldProps={{
-                        precision: 0,
                         min: 1,
                         max: 150,
                     }}

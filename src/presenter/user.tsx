@@ -1,33 +1,88 @@
 import {User} from "../model/user";
-import {useState} from "react";
+import React from "react";
+import {ActionType, ProForm} from "@ant-design/pro-components";
 
-const userPresenter = () =>{
+const userPresenter = () => {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [userList,setUserList] = useState<User[]>([]);
+    const [userList, setUserList] = React.useState<User[]>([]);
 
-    const getUser = (id:number) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [form] = ProForm.useForm();
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const actionRef = React.useRef<ActionType>();
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [modalVisible, setModalVisible] = React.useState(false);
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [modalTitle, setModalTitle] = React.useState('');
+
+    const hideModal = () => {
+        setModalVisible(false);
+    }
+
+    const showAddModal = () => {
+        setModalTitle('新增用户');
+        setModalVisible(true);
+    }
+
+    const showEditModal = (user: User) => {
+        setModalTitle('编辑用户');
+        form.setFieldsValue(user);
+        setModalVisible(true);
+    }
+
+    const getUser = (id: number) => {
         return userList.find(user => user.id === id);
     }
 
-    const addUser = (user:any) => {
+    const handleUser = (user: any) => {
         const currentUser = User.fromJson(user);
         const localUser = getUser(currentUser.id);
-        if(localUser){
+        if (localUser) {
             localUser.update(currentUser);
-            return;
+        }else{
+            setUserList([...userList, currentUser]);
         }
-        setUserList([...userList,currentUser]);
+        setModalVisible(false);
+        actionRef.current?.reload();
+        return true;
     }
 
-    const removeUser = (id:number) => {
+    const removeUser = (id: number) => {
         setUserList(userList.filter(user => user.id !== id));
+        actionRef.current?.reload();
+    }
+
+    const fetchUsers = async (params: any) => {
+        const name = params?.name;
+        if (name) {
+            const user = userList.filter(user => user.name === name);
+            return {
+                data: user,
+                success: true
+            }
+        }
+        return {
+            data: userList,
+            success: true
+        }
     }
 
     return {
-        userList,
-        addUser,
-        removeUser
+        form,
+        actionRef,
+        modalVisible,
+        modalTitle,
+
+        handleUser,
+        removeUser,
+        fetchUsers,
+        showAddModal,
+        hideModal,
+        showEditModal,
     }
 }
 
