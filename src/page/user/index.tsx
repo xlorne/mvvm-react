@@ -2,10 +2,10 @@ import React from "react";
 import {ModalForm, ProFormDigit, ProFormText, ProTable} from "@ant-design/pro-components";
 import {Button, Popconfirm, Space} from "antd";
 import {User} from "../../model/user";
-import {UserPresenter} from "./user.presenter";
+import {Presenter} from "./presenter";
 
 export interface UserComponentProps {
-    userPresenter(): UserPresenter;
+    userPresenter(): Presenter;
 }
 
 export const UserComponent: React.FC<UserComponentProps> = (props) => {

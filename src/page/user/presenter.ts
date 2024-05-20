@@ -1,6 +1,6 @@
 import {User} from "../../model/user";
 
-export interface UserPresenter {
+export interface Presenter {
     form: any;
     modalVisible: boolean;
     modalTitle: string;

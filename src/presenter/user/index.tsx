@@ -1,9 +1,9 @@
-import {User} from "../model/user";
+import {User} from "../../model/user";
 import React from "react";
 import {ActionType, ProForm} from "@ant-design/pro-components";
-import {UserPresenter} from "../page/user/user.presenter";
+import {Presenter} from "../../page/user/presenter";
 
-const userPresenter = ():UserPresenter => {
+const userPresenter = ():Presenter => {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [userList, setUserList] = React.useState<User[]>([]);
