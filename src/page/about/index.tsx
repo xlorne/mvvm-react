@@ -11,9 +11,9 @@ const About = () => {
         navigate('/');
     }
     return (
-        <PageContainer>
-            <h1>About</h1>
-
+        <PageContainer
+            title="About"
+        >
             <div>
                 <Space>
                     <Button onClick={handleClick} type="primary">Home</Button>

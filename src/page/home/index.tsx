@@ -7,16 +7,19 @@ const Home = () => {
 
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate('/about');
+    const goPage = (page:string) => {
+        navigate(page);
     }
-    return (
-        <PageContainer>
-            <h1>Home</h1>
 
+    return (
+        <PageContainer
+            title="Home"
+        >
             <div>
                 <Space>
-                    <Button onClick={handleClick} type="primary">About</Button>
+                    <Button onClick={()=>goPage('/about')} type="primary">About</Button>
+
+                    <Button onClick={()=>goPage('/user')} type="primary">User</Button>
                 </Space>
             </div>
 
