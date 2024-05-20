@@ -35,12 +35,17 @@ const userPresenter = ():Presenter => {
         setModalVisible(true);
     }
 
+    const generateUserId = () => {
+        return userList.length>0? Math.max(...userList.map(user => user.id))+1:1;
+    }
+
     const handleUser = (user: any) => {
         const currentUser = User.fromJson(user);
         const localUser = userList.find(item => user.id === item.id);
         if (localUser) {
             localUser.update(currentUser);
         }else{
+            currentUser.setId(generateUserId());
             setUserList([...userList, currentUser]);
         }
         setModalVisible(false);
