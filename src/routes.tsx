@@ -1,8 +1,7 @@
 import {createBrowserRouter} from "react-router-dom";
-import Home from "../page/home";
-import About from "../page/about";
-import {UserComponent} from "../page/user";
-import userPresenter from "../presenter/user";
+import Home from "./page/home";
+import About from "./page/about";
+import User from "./page/user";
 
 export const routes = createBrowserRouter([
     {
@@ -15,6 +14,6 @@ export const routes = createBrowserRouter([
     },
     {
         path: '/user',
-        element: <UserComponent userPresenter={()=>userPresenter()}/>,
+        element: <User/>,
     },
 ]);

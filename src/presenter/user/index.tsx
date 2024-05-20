@@ -1,7 +1,7 @@
 import {User} from "../../model/user";
 import React from "react";
 import {ActionType, ProForm} from "@ant-design/pro-components";
-import {Presenter} from "../../page/user/presenter";
+import {Presenter} from "../../component/user/presenter";
 
 const userPresenter = ():Presenter => {
 
