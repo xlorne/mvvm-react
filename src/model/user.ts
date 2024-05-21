@@ -25,4 +25,13 @@ export class User{
         this.address = user.address;
     }
 
+    toJson(){
+        return {
+            id: this.id,
+            name: this.name,
+            age: this.age,
+            address: this.address
+        }
+    }
+
 }

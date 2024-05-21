@@ -2,11 +2,11 @@ import {User} from "../../model/user";
 import React from "react";
 import {ActionType, ProForm} from "@ant-design/pro-components";
 import {Presenter} from "../../component/user/presenter";
+import {UserService} from "../../service/user";
 
 const userPresenter = ():Presenter => {
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [userList, setUserList] = React.useState<User[]>([]);
+    const userService = new UserService();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [form] = ProForm.useForm();
@@ -35,42 +35,20 @@ const userPresenter = ():Presenter => {
         setModalVisible(true);
     }
 
-    const generateUserId = () => {
-        return userList.length>0? Math.max(...userList.map(user => user.id))+1:1;
-    }
-
     const handleUser = (user: any) => {
-        const currentUser = User.fromJson(user);
-        const localUser = userList.find(item => user.id === item.id);
-        if (localUser) {
-            localUser.update(currentUser);
-        }else{
-            currentUser.setId(generateUserId());
-            setUserList([...userList, currentUser]);
-        }
+        userService.saveUser(user);
         setModalVisible(false);
         actionRef.current?.reload();
         return true;
     }
 
     const removeUser = (id: number) => {
-        setUserList(userList.filter(user => user.id !== id));
+        userService.removeUser(id);
         actionRef.current?.reload();
     }
 
     const fetchUsers = async (params: any) => {
-        const name = params?.name;
-        if (name) {
-            const user = userList.filter(user => user.name === name);
-            return {
-                data: user,
-                success: true
-            }
-        }
-        return {
-            data: userList,
-            success: true
-        }
+        return userService.fetchUsers(params);
     }
 
     return {
@@ -79,11 +57,11 @@ const userPresenter = ():Presenter => {
         modalVisible,
         modalTitle,
 
+        hideModal,
         handleUser,
         removeUser,
         fetchUsers,
         showAddModal,
-        hideModal,
         showEditModal,
     }
 }
