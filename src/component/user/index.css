@@ -1,0 +1,9 @@
+.click-btn{
+  background: none;
+  color: blue;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+

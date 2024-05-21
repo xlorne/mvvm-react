@@ -3,6 +3,7 @@ import {ModalForm, ProFormDigit, ProFormText, ProTable} from "@ant-design/pro-co
 import {Button, Popconfirm, Space} from "antd";
 import {User} from "../../model/user";
 import {Presenter} from "./presenter";
+import "./index.css";
 
 export interface UserComponentProps {
     userPresenter(): Presenter;
@@ -45,9 +46,13 @@ export const UserComponent: React.FC<UserComponentProps> = (props) => {
             valueType: 'option',
             render: (_: any, record: User) => (
                 <Space>
-                    <a key="edit" onClick={() => {
-                        presenter.showEditModal(record);
-                    }}>编辑</a>
+                    <button
+                        className="click-btn"
+                        key="edit"
+                        onClick={() => {
+                            presenter.showEditModal(record);
+                            return false;
+                        }}>编辑</button>
 
                     <Popconfirm
                         title="确认要删除吗？"
@@ -56,7 +61,10 @@ export const UserComponent: React.FC<UserComponentProps> = (props) => {
                             presenter.removeUser(record.id);
                         }}
                     >
-                        <a key="delete">删除</a>
+                        <button
+                            className="click-btn"
+                            key="delete"
+                        >删除</button>
                     </Popconfirm>
 
                 </Space>
