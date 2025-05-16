@@ -30,7 +30,7 @@ export function useDictPresenter() {
 
     // 当 state 发生变化时，更新 presenter 的状态
     React.useEffect(() => {
-        presenterRef.current?.updateState(state);
+        presenterRef.current?.syncState(state);
     }, [state])
 
     // 当组件挂载时，加载标签树数据

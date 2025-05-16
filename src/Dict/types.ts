@@ -1,7 +1,7 @@
 /**
- * Dispatch对象
+ * Dispatch对象，对应React的useState的dispatch函数能力
  */
-export type Dispatch<T> = (updater: (prevState: T) => T) => void;
+export type Dispatch<T> = (updater: ((prevState: T) => T) | T) => void;
 
 /**
  * 数据状态类型的定义

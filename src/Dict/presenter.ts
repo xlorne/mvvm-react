@@ -22,7 +22,7 @@ export class DictPresenter {
     }
 
     // 更新状态数据
-    updateState = (newState: DictState) => {
+    syncState = (newState: DictState) => {
         this.state = newState;
     }
 
