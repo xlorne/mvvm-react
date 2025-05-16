@@ -4,7 +4,6 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {ConfigProvider} from "antd";
 import zhCN from 'antd/locale/zh_CN';
-import 'dayjs/locale/zh-cn';
 import DictPage from "./Dict";
 
 const root = ReactDOM.createRoot(
