@@ -1,5 +1,4 @@
-import {DictApi, DictState} from "./types";
-import {Dispatch, SetStateAction} from "react";
+import {DictApi, DictState, Dispatch} from "./types";
 
 /**
  *  DictPresenter MVVM对象中ViewModel对象
@@ -8,14 +7,14 @@ import {Dispatch, SetStateAction} from "react";
 export class DictPresenter {
 
     // 更新数据状态的dispatch函数
-    private readonly dispatch: Dispatch<SetStateAction<DictState>>;
+    private readonly dispatch: Dispatch<DictState>;
     // 传入的Model对象
     private readonly api: DictApi;
     // 当前的数据状态，由于DictPresenter是通过React.useRef对象来保存的，为了保持数据状态的同步，需要通过updateState函数来更新。
     private state: DictState;
 
     // 通过构造函数传入数据状态和Model对象
-    constructor(state: DictState, dispatch: Dispatch<SetStateAction<DictState>>, api: DictApi) {
+    constructor(state: DictState, dispatch: Dispatch<DictState>, api: DictApi) {
         this.state = state;
         this.dispatch = dispatch;
         this.api = api;

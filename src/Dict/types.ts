@@ -1,4 +1,9 @@
 /**
+ * Dispatch对象
+ */
+export type Dispatch<T> = (updater: (prevState: T) => T) => void;
+
+/**
  * 数据状态类型的定义
  */
 export interface DictState {
