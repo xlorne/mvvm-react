@@ -14,7 +14,7 @@ export class DictPresenter {
     private state: DictState;
 
     // 通过构造函数传入数据状态和Model对象
-    constructor(state: DictState, dispatch: Dispatch<DictState>, api: DictApi) {
+    public constructor(state: DictState, dispatch: Dispatch<DictState>, api: DictApi) {
         this.state = state;
         this.dispatch = dispatch;
         this.api = api;
@@ -22,12 +22,12 @@ export class DictPresenter {
     }
 
     // 更新状态数据
-    syncState = (newState: DictState) => {
+    public syncState = (newState: DictState) => {
         this.state = newState;
     }
 
     // 刷新标签类型树数据
-    loadLabelTree = () => {
+    public loadLabelTree = () => {
         this.api.loadLabelTree().then(data => {
             this.dispatch((prevState) => {
                 return {
@@ -39,7 +39,7 @@ export class DictPresenter {
     }
 
     // 显示标签添加对话框
-    showValueAddModal = () => {
+    public showValueAddModal = () => {
         this.dispatch((prevState) => {
             return {
                 ...prevState,
@@ -49,7 +49,7 @@ export class DictPresenter {
     }
 
     // 隐藏标签添加对话框
-    hideValueAddModal = () => {
+    public hideValueAddModal = () => {
         this.dispatch((prevState) => {
             return {
                 ...prevState,
@@ -59,7 +59,7 @@ export class DictPresenter {
     }
 
     // 显示标签编辑对话框
-    showValueEditModal = (record: DictState) => {
+    public showValueEditModal = (record: DictState) => {
         this.dispatch((prevState) => {
             return {
                 ...prevState,
@@ -70,7 +70,7 @@ export class DictPresenter {
     }
 
     // 隐藏标签编辑对话框
-    hideValueEditModal = () => {
+    public hideValueEditModal = () => {
         this.dispatch((prevState) => {
             return {
                 ...prevState,
@@ -81,13 +81,13 @@ export class DictPresenter {
     }
 
     // 删除标签数据
-    deleteValue = (record: DictState) => {
+    public deleteValue = (record: DictState) => {
         this.api.deleteValue(record);
         this.refreshValueTable();
     }
 
     // 更新标签数据
-    updateValue = (record: DictState) => {
+    public updateValue = (record: DictState) => {
         this.api.updateValue(record);
         this.hideValueAddModal();
         this.hideValueEditModal();
@@ -95,7 +95,7 @@ export class DictPresenter {
     }
 
     // 刷新标签表格数据
-    refreshValueTable = () => {
+    public refreshValueTable = () => {
         this.dispatch((prevState) => {
             return {
                 ...prevState,
@@ -105,7 +105,7 @@ export class DictPresenter {
     }
 
     // 设置当前点击的标签数据，然后刷新表格数据
-    updateCurrentLabel = (selected: string[]) => {
+    public updateCurrentLabel = (selected: string[]) => {
         if (selected && selected.length > 0) {
             const label = selected[0];
             this.dispatch((prevState) => {

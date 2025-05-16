@@ -3,6 +3,7 @@ import {DictPresenter} from "../presenter";
 import {DictApiImpl} from "../model";
 import {DictState} from "../types";
 
+// state状态的初始值
 const initialState: DictState = {
     currentLabel: '',
     labelAddVisible: false,
