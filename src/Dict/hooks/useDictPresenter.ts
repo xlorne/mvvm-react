@@ -34,11 +34,6 @@ export function useDictPresenter() {
         presenterRef.current?.syncState(state);
     }, [state])
 
-    // 当组件挂载时，加载标签树数据
-    React.useEffect(() => {
-        presenterRef.current?.loadLabelTree();
-        presenterRef.current?.updateCurrentLabel([]);
-    }, []);
 
     return {
         state,

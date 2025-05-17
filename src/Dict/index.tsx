@@ -15,6 +15,12 @@ const DictPage = () => {
     // 通过hooks获取state状态数据与presenter对象
     const {state, presenter} = useDictPresenter();
 
+    // 当组件挂载时，加载标签树数据
+    React.useEffect(() => {
+        presenter.loadLabelTree();
+        presenter.updateCurrentLabel([]);
+    }, []);
+
     const onSelect: TreeProps['onSelect'] = (selectedKeys, info) => {
         presenter.updateCurrentLabel(selectedKeys as string[]);
     };

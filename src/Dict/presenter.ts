@@ -55,7 +55,7 @@ export class DictPresenter {
                 ...prevState,
                 valueAddVisible: false
             }
-        })
+        });
     }
 
     // 显示标签编辑对话框
